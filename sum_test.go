@@ -179,7 +179,7 @@ func TestCrossover(t *testing.T) {
 	}
 
 	// locate length range where parallel becomes faster than serial
-	upper := 1
+	upper := 10
 	for testing.Benchmark(s(upper)).NsPerOp() < testing.Benchmark(p(upper)).NsPerOp() {
 		// t.Logf("serial/parallel crossover not below slice lengths %d and %d", upper, 10*upper)
 		upper *= 10
