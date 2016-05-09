@@ -190,6 +190,9 @@ func TestCrossover(t *testing.T) {
 	for testing.Benchmark(s(upper)).NsPerOp() < testing.Benchmark(p(upper)).NsPerOp() {
 		// t.Logf("serial/parallel crossover not below slice lengths %d and %d", upper, 10*upper)
 		upper *= 10
+		if upper > 100000 {
+			t.Skip("Skipping Crossover test on underperformant system")
+		}
 	}
 	lower := upper / 10
 	t.Logf("serial/parallel crossover between slice length %d and %d", lower, upper)
