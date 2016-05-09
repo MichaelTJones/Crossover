@@ -174,8 +174,9 @@ func BenchmarkSum1000000000(b *testing.B) { benchmarkSum(b, 1000000000) }
 
 // Estimate slice size where parallel evaluation is faster than serial evaluation
 func TestCrossover(t *testing.T) {
-	if runtime.NumCPU() < 2 || runtime.GOMAXPROCS(0) < 2 {
-		t.Skip("Skipping Crossover test on single processor system")
+	parallel := min(runtime.NumCPU(), runtime.GOMAXPROCS(0))
+	if parallel < 2 {
+		t.Skip("Skipping Crossover test on non-concurrent configuration")
 	}
 
 	s := func(n int) func(b *testing.B) {
@@ -207,5 +208,5 @@ func TestCrossover(t *testing.T) {
 		}
 		// t.Logf("serial/parallel crossover between slice length %d and %d", lower, upper)
 	}
-	t.Logf("slice length %d estimated as serial/parallel crossover for this computer", (lower+upper)/2)
+	t.Logf("slice length %d estimated as serial/parallel crossover for this %d-way computer", (lower+upper)/2, parallel)
 }
