@@ -3,7 +3,7 @@ package sum
 import "runtime"
 
 func SumInts(ints []int) int {
-	if len(ints) < 28728 { // estimated by TestCrossover using "go test -v -benchtime=10s"
+	if len(ints) < 28728 { // estimated by TestCrossover using "go test -v"
 		return SumIntsSerial(ints)
 	}
 	return SumIntsParallel(ints)
